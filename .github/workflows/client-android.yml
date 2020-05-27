@@ -80,11 +80,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEYSTORE_PASSWORD: ""
           ANDROID_KEY_ALIAS: ExponentKey
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ""
         run: |
           if [ -z "$ANDROID_KEYSTORE_PASSWORD" ]; then
+            echo "external build detected, using debug keystore"
             export ANDROID_KEYSTORE_PATH='../debug.keystore'
             export ANDROID_KEY_ALIAS=androiddebugkey
           else
